@@ -2,6 +2,7 @@ import pygame
 import math
 from sys import exit
 from Button import Button
+from UniwersalneFunkcje import *
 
 fps = 60
 
@@ -43,6 +44,9 @@ def changeGamestateToMenu():
 def setup_menu_buttons():
     global button_list
     button_list.clear()
+
+
+
     nowa_gra_button = Button(
         text="Nowa Gra",
         font_size=20,

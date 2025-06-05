@@ -1,7 +1,15 @@
 import pygame
+from UniwersalneFunkcje import *
 
 class Button:
+
+
+
     def __init__(self, text, font_size, rect, bg_color, when_clicked_color, text_color, func, nieKlikniety=None, klikniety=None):
+
+        btn_texture_spritesheet = pygame.image.load("Assets/Images/ButtonFinalFinal(ale juz serio)/Button.png")
+        buttons = UniwersalneFunkcje.get_sliced_surface_from_spritesheet(btn_texture_spritesheet, 208, 48, 1.25, 2, 1)
+
         self.text = text
         self.font = pygame.font.Font("Assets/Fonts/Daydream.ttf", font_size)
         self.rect = pygame.Rect(rect)
@@ -14,8 +22,8 @@ class Button:
         self.func = func
 
         # Ładowanie tekstur
-        self.image_normal = None
-        self.image_hover = None
+        self.image_normal = buttons[0][0] #nonoe
+        self.image_hover = buttons[0][1]
 
         if nieKlikniety:
             self.image_normal = pygame.image.load(nieKlikniety).convert_alpha()
@@ -35,7 +43,6 @@ class Button:
 
 
         else:
-
             color = self.when_clicked_color if is_hovered else self.bg_color
             pygame.draw.rect(surface, color, self.rect)
 
