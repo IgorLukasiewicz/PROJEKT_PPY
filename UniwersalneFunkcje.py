@@ -7,7 +7,7 @@ class UniwersalneFunkcje:
         image = pygame.Surface((sprite_width, sprite_height), pygame.SRCALPHA).convert_alpha()
         image.blit(sheet, (0,0), (position_x, position_y, sprite_width, sprite_height))
         if scale != 1:
-            image = pygame.transform.scale(image, (sprite_width * scale, sprite_height * scale))
+            image = pygame.transform.scale(image, (int(sprite_width * scale), int(sprite_height * scale)))
         return image
 
     @staticmethod

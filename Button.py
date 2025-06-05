@@ -3,12 +3,14 @@ from UniwersalneFunkcje import *
 
 class Button:
 
+    def __init__(self, text, font_size, rect, bg_color, when_clicked_color, text_color, func, scale=1.25, nieKlikniety=None, klikniety=None):
+
+        # 1280 -> 1920
+        # 720 -> 1080
+        #
+        # zmienna = obecna szerokość / nowa szerokość
 
 
-    def __init__(self, text, font_size, rect, bg_color, when_clicked_color, text_color, func, nieKlikniety=None, klikniety=None):
-
-        btn_texture_spritesheet = pygame.image.load("Assets/Images/ButtonFinalFinal(ale juz serio)/Button.png")
-        buttons = UniwersalneFunkcje.get_sliced_surface_from_spritesheet(btn_texture_spritesheet, 208, 48, 1.25, 2, 1)
 
         self.text = text
         self.font = pygame.font.Font("Assets/Fonts/Daydream.ttf", font_size)
@@ -20,6 +22,10 @@ class Button:
         self.click_sound.set_volume(0.25)
         self.was_clicked = False
         self.func = func
+
+        btn_texture_spritesheet = pygame.image.load("Assets/Images/ButtonFinalFinal(ale juz serio)/Button.png")
+        buttons = UniwersalneFunkcje.get_sliced_surface_from_spritesheet(btn_texture_spritesheet, 208, 48,
+                                                                         scale*1.25, 2, 1)
 
         # Ładowanie tekstur
         self.image_normal = buttons[0][0] #nonoe
