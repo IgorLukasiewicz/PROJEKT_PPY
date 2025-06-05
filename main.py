@@ -11,35 +11,38 @@ width, height = 1280, 720
 window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 pygame.display.set_caption('Echo Pets')
 
+gameState = "menu"
+
 clock = pygame.time.Clock()
 
 pygame.mixer.music.load('Assets/Sounds/Music/cyborg-ninja-kevin-macleod-main-version-7993-03-00 (1) (online-audio-converter.com).wav')
-pygame.mixer.music.play(-1) # nieskonczona petla bo -1
-pygame.mixer.music.set_volume(0.25) #ustawienei glosnosci
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.25)
 
-button_list = [] # lista przycisków  wszystkich
+button_list = []
 
+background = None
+background_width = 0
 
-# SPRAWDZAMY CZY PRZYCISK POWINIEN WYDAC DZWIEK
 def shouldButtonMakeASound():
     for button in button_list:
         button.handle_click()
-
-
-
-
-# ZMIENIANIE ROZMAROW GUZIKA W PRZYPADKU RESIZE
-def buttonResize():
-    for button in button_list:
-        button.draw(window)
-
 
 def closeGame():
     pygame.quit()
     exit()
 
-# MENU STARTOWE
-def draw_main_menu(window):
+def changeGamestateToMenu():
+    global gameState
+    gameState = "menu"
+    pygame.mixer.music.load('Assets/Sounds/Music/cyborg-ninja-kevin-macleod-main-version-7993-03-00 (1) (online-audio-converter.com).wav')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.25)
+    setup_menu_buttons()
+
+def setup_menu_buttons():
+    global button_list
+    button_list.clear()
     nowa_gra_button = Button(
         text="Nowa Gra",
         font_size=20,
@@ -47,7 +50,7 @@ def draw_main_menu(window):
         bg_color=(70, 70, 70),
         when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func=None
+        func=afterNewGame,
     )
 
     wczytaj_gre_button = Button(
@@ -57,46 +60,115 @@ def draw_main_menu(window):
         bg_color=(70, 70, 70),
         when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func = None
+        func=None
     )
 
-    wyjdz_z_gry_buttom = Button(
+    wyjdz_z_gry_button = Button(
         text="Wyjdz",
         font_size=20,
         rect=(width // 2 - width / 10, height // 1.5 - height / 12, width / 5, height / 12),
         bg_color=(70, 70, 70),
         when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func = closeGame
+        func=closeGame
     )
 
-    global scroll # global dlatego, że scroll musi byc jako pole globalne ale musimy zmodyfikowac go w metodzie
+    button_list.extend([nowa_gra_button, wczytaj_gre_button, wyjdz_z_gry_button])
 
-    bakcground = pygame.image.load('Assets/Images/Backgrounds/juz seruo final.png').convert() # TU ZMIENIASZ TLO
+def setup_new_game_buttons():
+    global button_list, wrocDoMenuButton
+    button_list.clear()
+
+    wybor1Button = Button(
+        text="Wybierz",
+        font_size=20,
+        rect=(width * 1 / 8.5 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
+        bg_color=(70, 70, 70),
+        when_clicked_color=(150, 150, 150),
+        text_color=(255, 255, 255),
+        func=None
+    )
+
+    wybor2Button = Button(
+        text="Wybierz",
+        font_size=20,
+        rect=(width * 1 / 2.67 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
+        bg_color=(70, 70, 70),
+        when_clicked_color=(150, 150, 150),
+        text_color=(255, 255, 255),
+        func=None
+    )
+
+    wybor3Button = Button(
+        text="Wybierz",
+        font_size=20,
+        rect=(width * 1 / 1.6 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
+        bg_color=(70, 70, 70),
+        when_clicked_color=(150, 150, 150),
+        text_color=(255, 255, 255),
+        func=None
+    )
+
+    wybor4Button = Button(
+        text="Wybierz",
+        font_size=20,
+        rect=(width * 1 / 1.13 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
+        bg_color=(70, 70, 70),
+        when_clicked_color=(150, 150, 150),
+        text_color=(255, 255, 255),
+        func=None
+    )
+
+    wrocDoMenuButton = Button(
+        text="",
+        font_size=0,
+        rect=(width * 1 / 8.5 - (width / 5)/ 2, height / 10 - 35, 70, 70),
+        bg_color=(70, 70, 70),
+        when_clicked_color=(150, 150, 150),
+        text_color=(255, 255, 255),
+        func=changeGamestateToMenu,
+        nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/NieKlikniety.png',
+        klikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/Klikniety.png'
+    )
+
+    button_list.extend([wybor1Button, wybor2Button, wybor3Button, wybor4Button, wrocDoMenuButton])
+
+def afterNewGame():
+    global gameState, background, background_width, width, height
+    gameState = "nowa gra"
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load('Assets/Sounds/Music/itty-bitty-8-bit-kevin-macleod-main-version-7983-03-13.wav')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.25)
+
+    background = pygame.image.load('Assets/Images/Backgrounds/tloWyboru.png').convert()
+    background = pygame.transform.scale(background, (width, height))
+    background_width = background.get_width()
+
+    setup_new_game_buttons()
+
+def draw_main_menu(window):
+    global scroll
+
+    bakcground = pygame.image.load('Assets/Images/Backgrounds/juz seruo final.png').convert()
     bakcground = pygame.transform.scale(bakcground, (width, height))
     bakcground_width = bakcground.get_width()
 
-    tiles = math.ceil(width / bakcground_width) + 2 # ceil zaokrągla wynik w górę do najbliższej liczby całkowitej, bo nie możemy narysować 2.56 kafelka — potrzebujemy całych.
+    tiles = math.ceil(width / bakcground_width) + 2
 
-    scroll = (scroll - 2.5) % bakcground_width  # przesuwamy i zawijamy scroll
+    scroll = (scroll - 2.5) % bakcground_width
 
     for x in range(-1, tiles - 1):
-        window.blit(bakcground, (x * bakcground_width - scroll, 0))  # przesuwamy tło w lewo
+        window.blit(bakcground, (x * bakcground_width - scroll, 0))
 
 
-    nowa_gra_button.draw(window)
-    wczytaj_gre_button.draw(window)
-    wyjdz_z_gry_buttom.draw(window)
-
-    button_list.append(nowa_gra_button)
-    button_list.append(wczytaj_gre_button)
-    button_list.append(wyjdz_z_gry_buttom)
+    for button in button_list:
+        button.draw(window)
 
 
+setup_menu_buttons()
 
-#MAIN PETLA
 while True:
-
     clock.tick(fps)
 
     for event in pygame.event.get():
@@ -107,9 +179,24 @@ while True:
             width, height = event.w, event.h
             window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 
-    draw_main_menu(window)
+            if gameState == "menu":
+                setup_menu_buttons()
+
+            elif gameState == "nowa gra":
+
+                background = pygame.image.load('Assets/Images/Backgrounds/tloWyboru.png').convert()
+                background = pygame.transform.scale(background, (width, height))
+
+                setup_new_game_buttons()
+
+    if gameState == "menu":
+        draw_main_menu(window)
+
+    elif gameState == "nowa gra":
+        window.blit(background, (0, 0))
+        for button in button_list:
+            button.draw(window)
+
     shouldButtonMakeASound()
 
-
     pygame.display.update()
-
