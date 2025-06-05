@@ -1,0 +1,1 @@
+Przycisk ma wymiary 208px / 48 px, tutaj są dwa przyciski czyli plik ma 416 px / 48 px
