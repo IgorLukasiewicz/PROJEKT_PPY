@@ -1,6 +1,10 @@
 import pygame
 import math
 from sys import exit
+from EndGameButton import EndGameButton
+
+from pygame.transform import scale
+
 from Button import Button
 from UniwersalneFunkcje import *
 
@@ -10,6 +14,8 @@ pygame.init()
 scroll = 0
 BASE_WIDTH, BASE_HEIGHT = 1280, 720
 width, height = 1280, 720
+
+
 window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 pygame.display.set_caption('Echo Pets')
 
@@ -36,17 +42,17 @@ def shouldButtonMakeASound():
     for button in button_list:
         button.handle_click()
 
-def closeGame():
+def closeGame(): # ========================================================== NIE WYWAlA BŁĘDU =======================================================================
     pygame.quit()
     exit()
 
-def changeGamestateToMenu():
+def changeGamestateToMenu(window_scale=1):
     global gameState
     gameState = "menu"
     pygame.mixer.music.load('Assets/Sounds/Music/cyborg-ninja-kevin-macleod-main-version-7993-03-00 (1) (online-audio-converter.com).wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.25)
-    setup_menu_buttons()
+    setup_menu_buttons(window_scale)
 
 def setup_menu_buttons(window_scale):
     global button_list
@@ -76,7 +82,7 @@ def setup_menu_buttons(window_scale):
         scale = window_scale
     )
 
-    wyjdz_z_gry_button = Button(
+    wyjdz_z_gry_button = EndGameButton(
         text="Wyjdz",
         font_size=20,
         rect=(width // 2 - width / 10, height // 1.5 - height / 12, width / 5, height / 12),
@@ -151,7 +157,10 @@ def setup_new_game_buttons(window_scale):
 
     button_list.extend([wybor1Button, wybor2Button, wybor3Button, wybor4Button, wrocDoMenuButton])
 
-def afterNewGame():
+
+
+
+def afterNewGame(window_scale):
     global gameState, background, background_width, width, height
     gameState = "nowa gra"
     pygame.mixer.music.stop()
@@ -163,9 +172,9 @@ def afterNewGame():
     background = pygame.transform.scale(background, (width, height))
     background_width = background.get_width()
 
-    setup_new_game_buttons(1)
+    setup_new_game_buttons(window_scale)
 
-def draw_main_menu(window):
+def draw_main_menu(window, window_scale):
     global scroll
 
     bakcground = pygame.image.load('Assets/Images/Backgrounds/juz seruo final.png').convert()
@@ -179,6 +188,7 @@ def draw_main_menu(window):
     for x in range(-1, tiles - 1):
         window.blit(bakcground, (x * bakcground_width - scroll, 0))
 
+    setup_menu_buttons(window_scale)
 
     for button in button_list:
         button.draw(window)
@@ -190,6 +200,7 @@ while True:
     clock.tick(fps)
 
     for event in pygame.event.get():
+        scale = get_window_scale(width, height)
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -209,7 +220,7 @@ while True:
                 setup_new_game_buttons(scale)
 
     if gameState == "menu":
-        draw_main_menu(window)
+        draw_main_menu(window, scale)
 
     elif gameState == "nowa gra":
         window.blit(background, (0, 0))

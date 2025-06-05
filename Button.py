@@ -21,11 +21,12 @@ class Button:
         self.click_sound = pygame.mixer.Sound('Assets/Sounds/SFX/8-bit-denied-alert-swoop-1-00-00 (online-audio-converter.com).wav')
         self.click_sound.set_volume(0.25)
         self.was_clicked = False
+        self.scale = scale
         self.func = func
 
         btn_texture_spritesheet = pygame.image.load("Assets/Images/ButtonFinalFinal(ale juz serio)/Button.png")
         buttons = UniwersalneFunkcje.get_sliced_surface_from_spritesheet(btn_texture_spritesheet, 208, 48,
-                                                                         scale*1.25, 2, 1)
+                                                                         self.scale*1.25, 2, 1)
 
         # Ładowanie tekstur
         self.image_normal = buttons[0][0] #nonoe
@@ -67,6 +68,6 @@ class Button:
                 self.was_clicked = True
                 pygame.time.wait(250)
                 if self.func:
-                    self.func()
+                    self.func(self.scale)
         else:
             self.was_clicked = False
