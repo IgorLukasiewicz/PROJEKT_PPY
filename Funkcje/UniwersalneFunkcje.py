@@ -1,5 +1,8 @@
 import pygame
 
+
+
+
 class UniwersalneFunkcje:
 
     @staticmethod
@@ -21,3 +24,6 @@ class UniwersalneFunkcje:
                 row_sprites.append(UniwersalneFunkcje.get_single_surface_from_spritesheet(sheet, sprite_width, sprite_height, scale, x, y))
             sprites.append(row_sprites)
         return sprites
+
+
+

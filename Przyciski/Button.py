@@ -1,9 +1,8 @@
-import pygame
-from UniwersalneFunkcje import *
+from Funkcje.UniwersalneFunkcje import *
 
 class Button:
 
-    def __init__(self, text, font_size, rect, bg_color, when_clicked_color, text_color, func, scale=1.25, nieKlikniety=None, klikniety=None):
+    def __init__(self, text, font_size, rect, text_color, func, scale=1.25, nieKlikniety=None, klikniety=None):
 
         # 1280 -> 1920
         # 720 -> 1080
@@ -15,8 +14,6 @@ class Button:
         self.text = text
         self.font = pygame.font.Font("Assets/Fonts/Daydream.ttf", font_size)
         self.rect = pygame.Rect(rect)
-        self.bg_color = bg_color
-        self.when_clicked_color = when_clicked_color
         self.text_color = text_color
         self.click_sound = pygame.mixer.Sound('Assets/Sounds/SFX/8-bit-denied-alert-swoop-1-00-00 (online-audio-converter.com).wav')
         self.click_sound.set_volume(0.25)

@@ -1,12 +1,9 @@
-import pygame
+from Przyciski.EndGameButton import EndGameButton
 import math
-from sys import exit
-from EndGameButton import EndGameButton
+from Przyciski.Button import Button
+from Funkcje.UniwersalneFunkcje import  *
+from Przyciski.TextField import TextField
 
-from pygame.transform import scale
-
-from Button import Button
-from UniwersalneFunkcje import *
 
 fps = 60
 
@@ -15,6 +12,8 @@ scroll = 0
 BASE_WIDTH, BASE_HEIGHT = 1280, 720
 width, height = 1280, 720
 
+textField = ""
+textFieldText= "" #TUTAJ ZAPISUJE TEKST W NICKU, NIGDZIE INDZIEJ NIE BĘDZIEMY UŻYWAC TEGO WIĘC
 
 window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 pygame.display.set_caption('Echo Pets')
@@ -48,11 +47,60 @@ def closeGame(): # ========================================================== NI
 
 def changeGamestateToMenu(window_scale=1):
     global gameState
+    global textFieldText
     gameState = "menu"
     pygame.mixer.music.load('Assets/Sounds/Music/cyborg-ninja-kevin-macleod-main-version-7993-03-00 (1) (online-audio-converter.com).wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.25)
     setup_menu_buttons(window_scale)
+    textFieldText = ""
+
+
+def runGame():
+    global gameState
+    global background
+
+    gameState = "playing"
+
+    background = pygame.image.load('Assets/Images/Backgrounds/wpisywanieNickuIMozeCosJescze.png').convert()
+    background = pygame.transform.scale(background, (width, height))
+
+    window.blit(background, (0, 0))
+
+    square_width = width * (100 / BASE_WIDTH)
+    square_height = height * (100 / BASE_HEIGHT)
+
+    square_rect = pygame.Rect(
+        (width - square_width) // 2,
+        (height - square_height) // 2,
+        square_width,
+        square_height
+    )
+
+    pygame.draw.rect(window, (255, 255, 255), square_rect)
+
+    wrocDoMenuButton = Button(
+        text="",
+        font_size=0,
+        rect=(width * 1 / 8.5 - (width / 5) / 2, height / 10 - 35, width / 23, height / 12),
+        text_color=(255, 255, 255),
+        func=changeGamestateToMenu,
+        nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/NieKlikniety.png',
+        klikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/Klikniety.png'
+    )
+
+    font = pygame.font.Font("Assets/Fonts/Daydream.ttf", int(50 * width / BASE_WIDTH))
+    text_surface = font.render(textFieldText, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(width // 2, height // 3.2))
+
+    button_list.append(wrocDoMenuButton)
+
+
+    pygame.display.update()
+    window.blit(text_surface, text_rect)
+
+
+
 
 def setup_menu_buttons(window_scale):
     global button_list
@@ -62,10 +110,8 @@ def setup_menu_buttons(window_scale):
 
     nowa_gra_button = Button(
         text="Nowa Gra",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width // 2 -  width / 10, height // 2.5 - height / 12, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
         func=afterNewGame,
         scale=window_scale
@@ -73,10 +119,8 @@ def setup_menu_buttons(window_scale):
 
     wczytaj_gre_button = Button(
         text="Wczytaj Gre",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width // 2 - width / 10, height //2 - height / 12, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
         func=None,
         scale = window_scale
@@ -84,10 +128,8 @@ def setup_menu_buttons(window_scale):
 
     wyjdz_z_gry_button = EndGameButton(
         text="Wyjdz",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width // 2 - width / 10, height // 1.5 - height / 12, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
         func=closeGame,
         scale=window_scale
@@ -95,51 +137,91 @@ def setup_menu_buttons(window_scale):
 
     button_list.extend([nowa_gra_button, wczytaj_gre_button, wyjdz_z_gry_button])
 
+def poWyborze(text):
+    global gameState
+    global textField
+    global button_list
+    global textFieldText
+    global background
+
+    background = pygame.image.load('Assets/Images/Backgrounds/wpisywanieNickuIMozeCosJescze.png').convert()
+    background = pygame.transform.scale(background, (width, height))
+
+    button_list.clear()
+    gameState = "makePet"
+    window.blit(background, (0, 0))
+
+
+    tf_width = width * 0.4
+    tf_height = height * 0.15
+
+
+    tf_x = (width - tf_width) // 2
+    tf_y = (height - tf_height) // 2
+
+
+    textField = TextField(
+        font_size=int(50 * width / BASE_WIDTH),
+        rect=(tf_x, tf_y, tf_width, tf_height),
+        text_color=pygame.Color("white"),
+        custom_spritesheet=None,
+        func=runGame,
+        text=textFieldText
+    )
+
+    wrocDoMenuButton = Button(
+        text="",
+        font_size=0,
+        rect=(width * 1 / 8.5 - (width / 5) / 2, height / 10 - 35, width / 23, height / 12),
+        text_color=(255, 255, 255),
+        func=changeGamestateToMenu,
+        nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/NieKlikniety.png',
+        klikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/Klikniety.png'
+    )
+
+    button_list.append(wrocDoMenuButton)
+
+
+
+
+
 def setup_new_game_buttons(window_scale):
     global button_list, wrocDoMenuButton
     button_list.clear()
 
     wybor1Button = Button(
         text="Wybierz",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width * 1 / 8.5 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func=None,
+        func=poWyborze,
         scale=window_scale
     )
 
     wybor2Button = Button(
         text="Wybierz",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width * 1 / 2.67 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func=None,
+        func=poWyborze,
         scale=window_scale
     )
 
     wybor3Button = Button(
         text="Wybierz",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width * 1 / 1.6 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func=None,
+        func=poWyborze,
         scale=window_scale
     )
 
     wybor4Button = Button(
         text="Wybierz",
-        font_size=20,
+        font_size=int(20 * width / BASE_WIDTH),
         rect=(width * 1 / 1.13 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
-        func=None,
+        func=poWyborze,
         scale=window_scale
     )
 
@@ -147,8 +229,6 @@ def setup_new_game_buttons(window_scale):
         text="",
         font_size=0,
         rect=(width * 1 / 8.5 - (width / 5) / 2, height / 10 - 35, width / 23, height / 12),
-        bg_color=(70, 70, 70),
-        when_clicked_color=(150, 150, 150),
         text_color=(255, 255, 255),
         func=changeGamestateToMenu,
         nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/NieKlikniety.png',
@@ -156,7 +236,6 @@ def setup_new_game_buttons(window_scale):
     )
 
     button_list.extend([wybor1Button, wybor2Button, wybor3Button, wybor4Button, wrocDoMenuButton])
-
 
 
 
@@ -209,6 +288,7 @@ while True:
             window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
             scale = get_window_scale(width, height)
 
+
             if gameState == "menu":
                 setup_menu_buttons(scale)
 
@@ -216,8 +296,17 @@ while True:
 
                 background = pygame.image.load('Assets/Images/Backgrounds/tloWyboru.png').convert()
                 background = pygame.transform.scale(background, (width, height))
-
                 setup_new_game_buttons(scale)
+
+            if gameState == "makePet":
+                poWyborze(textFieldText)
+
+            if gameState =="playing":
+                runGame()
+
+
+        if gameState == "makePet" and textField:
+                textField.handle_event(event)
 
     if gameState == "menu":
         draw_main_menu(window, scale)
@@ -226,6 +315,24 @@ while True:
         window.blit(background, (0, 0))
         for button in button_list:
             button.draw(window)
+
+    elif gameState == "makePet":
+        textField.draw(window)
+        textFieldText = textField.text
+        font = pygame.font.Font("Assets/Fonts/Daydream.ttf", int(50 * width/BASE_WIDTH))
+        text_surface = font.render("Podaj nazwe Peta", True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=(width // 2, height // 3.2))
+        window.blit(text_surface, text_rect)
+
+        for button in button_list:
+            button.draw(window)
+
+
+
+
+
+
+
 
     shouldButtonMakeASound()
 
