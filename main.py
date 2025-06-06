@@ -3,7 +3,7 @@ import math
 from Przyciski.Button import Button
 from Funkcje.UniwersalneFunkcje import  *
 from Przyciski.TextField import TextField
-
+from PointsBar import *
 
 fps = 60
 
@@ -271,6 +271,11 @@ def draw_main_menu(window, window_scale):
 
     for button in button_list:
         button.draw(window)
+
+    bar_path = 'Assets/Images/PointsBar/SatietyBar/HungerIcon.png'
+    bar = PointsBar("test", 75, bar_path, (0,0,249,48), window_scale)
+    bar.draw(window)
+
 
 
 setup_menu_buttons(window_scale=1)
