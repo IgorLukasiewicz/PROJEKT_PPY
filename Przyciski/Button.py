@@ -1,4 +1,6 @@
 from Funkcje.UniwersalneFunkcje import *
+import inspect
+
 
 class Button:
 
@@ -65,6 +67,10 @@ class Button:
                 self.was_clicked = True
                 pygame.time.wait(250)
                 if self.func:
-                    self.func(self.scale)
+                    sig = inspect.signature(self.func)
+                    if len(sig.parameters) > 0:
+                        self.func(self.scale)
+                    else:
+                        self.func()
         else:
             self.was_clicked = False

@@ -1,10 +1,12 @@
+from pygame.examples import sound
+
 from Przyciski.EndGameButton import EndGameButton
 import math
 from Przyciski.Button import Button
 from Funkcje.UniwersalneFunkcje import  *
 from Przyciski.TextField import TextField
 from PointsBar import *
-
+import random
 
 from Pets.Pet import Pet
 from Pets.Kameleon import Kameleon
@@ -44,6 +46,9 @@ pet = ""
 
 pet_Type = ""
 
+frameCounter = 0
+
+foodRect = None
 
 
 def get_window_scale(new_screen_width, new_screen_height):
@@ -71,12 +76,61 @@ def changeGamestateToMenu(window_scale=1):
     textFieldText = ""
 
 
+
+def nakarm():
+    global pet
+    global pet_Type
+    global button_list
+    global gameState
+    global background
+    global foodRect
+    global frameCounter
+
+    foodRect = None
+
+    button_list.clear()
+
+    frameCounter = 0
+
+    gameState = "feeding"
+
+    background = pygame.image.load(pet.backgroundTexture).convert()
+    background = pygame.transform.scale(background, (width, height))
+
+    window.blit(background, (0, 0))
+
+
+
+    wrocDoGryButton = Button(
+        text="",
+        font_size=0,
+        rect=(width * 1 / 8.5 - (width / 5) / 2, height / 10 - 35, width / 23, height / 12),
+        text_color=(255, 255, 255),
+        func=runGame,
+        nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/WrocDoGrtButton/przedKlik.png',
+        klikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/WrocDoGrtButton/poKlik.png'
+    )
+    button_list.append(wrocDoGryButton)
+
+
+
+
+    pygame.display.update()
+
+
+
+
+
+
 def runGame():
     global button_list
     global gameState
     global background
+    global frameCounter
 
     button_list.clear()
+
+    frameCounter = 0
 
     gameState = "playing"
 
@@ -93,10 +147,12 @@ def runGame():
 
     window.blit(pet_texture, (pet_x, pet_y))
 
+
+
     wrocDoMenuButton = Button(
         text="",
         font_size=0,
-        rect=(width - width / 23, 5 * width/BASE_WIDTH, width / 23, height / 12),  # prawy górny róg
+        rect=(width - width / 23, 5 * width/BASE_WIDTH, width / 23, height / 12),
         text_color=(255, 255, 255),
         func=changeGamestateToMenu,
         nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/PrzejdzDoMenuButton/NieKlikniety.png',
@@ -108,7 +164,7 @@ def runGame():
         font_size=int(25 * width / BASE_WIDTH),
         rect=(width * 1 / 5 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
         text_color=(255, 255, 255),
-        func=wybierz_kameleona,
+        func=nakarm,
         scale=get_window_scale(width, height)
     )
 
@@ -180,6 +236,7 @@ def poWyborze(text):
     global button_list
     global textFieldText
     global background
+
 
 
     background = pygame.image.load('Assets/Images/Backgrounds/wpisywanieNickuIMozeCosJescze.png').convert()
@@ -337,7 +394,6 @@ def draw_main_menu(window, window_scale):
 
 setup_menu_buttons(window_scale=1)
 
-frameCounter = 0
 
 while True:
     clock.tick(fps)
@@ -370,6 +426,9 @@ while True:
             if gameState =="playing":
                 runGame()
 
+            if gameState == "feeding":
+                nakarm()
+
 
         if gameState == "makePet" and textField:
                 textField.handle_event(event)
@@ -393,7 +452,7 @@ while True:
         for button in button_list:
             button.draw(window)
 
-    else:
+    elif gameState == "playing":
         frameCounter += 1
 
         if frameCounter == 120:
@@ -404,7 +463,7 @@ while True:
         if isinstance(pet, Pet):
             joy = pet.joy_points
         bar_path = 'Assets/Images/PointsBar/SatietyBar/HungerIcon.png'
-        bar = PointsBar("test", 75, bar_path, (0, 0, 249, 48), 1 * width / BASE_WIDTH)
+        bar = PointsBar("test", pet.satiety_points, bar_path, (0, 0, 249, 48), 1 * width / BASE_WIDTH)
         bar.draw(window)
 
         bar_path = 'Assets/Images/PointsBar/JoyBar/JoyIcon.png'
@@ -413,6 +472,33 @@ while True:
 
         for button in button_list:
             button.draw(window)
+
+    elif gameState == "feeding":
+        window.blit(background, (0, 0))
+        for button in button_list:
+            button.draw(window)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if foodRect and foodRect.collidepoint(event.pos):
+                foodRect = None
+                pet.feed(1)
+
+
+        frameCounter += 1
+
+        foodSquareSize = int(100 * width / BASE_WIDTH)
+        original_texture = pygame.image.load('Assets/Images/PointsBar/SatietyBar/HungerIcon.png').convert_alpha()
+
+
+        if foodRect:
+            texture = pygame.transform.scale(original_texture, (foodSquareSize, foodSquareSize))
+            window.blit(texture, (foodRect.x, foodRect.y))
+
+        if frameCounter == 50:
+            foodX = random.randint(0, width - foodSquareSize)
+            foodY = random.randint(0, height - foodSquareSize)
+            foodRect = pygame.Rect(foodX, foodY, foodSquareSize, foodSquareSize)
+            frameCounter = 0
 
     shouldButtonMakeASound()
 
