@@ -33,7 +33,7 @@ class PointsBar:
         surface.blit(self.bar_icon, self.rect)
 
         x +=self.bar_icon.get_width()
-        y += 4*self.scale
+        y += 5*self.scale
         surface.blit(self.red_bar_surface, (x, y, w, h))
 
 

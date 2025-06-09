@@ -8,6 +8,10 @@ class Pet:
         self.textureAfterEvolve = ""
         self.backgroundTexture = ""
 
+
+    def textureBeforeEvolve(self):
+        return self.textureBeforeEvolve
+
     @property
     def name(self):
         return self._name

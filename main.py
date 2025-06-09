@@ -14,6 +14,7 @@ from Pets.Papuga import Papuga
 from Pets.Pingwin import Pingwin
 from Pets.Wieloryb import Wieloryb
 
+from JoyGameState import FallingBock
 
 
 fps = 60
@@ -149,6 +150,7 @@ def runGame():
 
 
 
+
     wrocDoMenuButton = Button(
         text="",
         font_size=0,
@@ -177,6 +179,11 @@ def runGame():
         scale=get_window_scale(width, height)
     )
 
+
+    # TO JEST TESTOWEEEEE!!!
+    # def makeGameFun():
+    #     global pet_Type, pet, scale
+    #     joy_game = JoyGame(pet, width, height, scale)
 
 
 
@@ -371,7 +378,10 @@ def afterNewGame(window_scale):
 
     setup_new_game_buttons(window_scale)
 
+fb = FallingBock(0, 0, scale=1) #TESTOWE
+
 def draw_main_menu(window, window_scale):
+    global fb #TESTOWE
     global scroll
 
     bakcground = pygame.image.load('Assets/Images/Backgrounds/juz seruo final.png').convert()
@@ -389,6 +399,13 @@ def draw_main_menu(window, window_scale):
 
     for button in button_list:
         button.draw(window)
+
+    fb.draw(window, window_scale)
+
+
+def joy_game_state():
+    global gameState
+    gameState = "joy game"
 
 
 
