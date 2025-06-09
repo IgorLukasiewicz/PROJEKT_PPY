@@ -14,7 +14,7 @@ from Pets.Papuga import Papuga
 from Pets.Pingwin import Pingwin
 from Pets.Wieloryb import Wieloryb
 
-from JoyGameState import FallingBock
+from JoyGameState import FallingBlock
 
 
 fps = 60
@@ -378,7 +378,7 @@ def afterNewGame(window_scale):
 
     setup_new_game_buttons(window_scale)
 
-fb = FallingBock(0, 0, scale=1) #TESTOWE
+fb = FallingBlock(0, 0, scale=1) #TESTOWE
 
 def draw_main_menu(window, window_scale):
     global fb #TESTOWE
