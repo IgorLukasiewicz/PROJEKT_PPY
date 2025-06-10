@@ -1,21 +1,20 @@
-from pygame.examples import sound
-
 from Przyciski.EndGameButton import EndGameButton
-import math
 from Przyciski.Button import Button
-from Funkcje.UniwersalneFunkcje import  *
 from Przyciski.TextField import TextField
 from PointsBar import *
 import random
 
-from Pets.Pet import Pet
 from Pets.Kameleon import Kameleon
 from Pets.Papuga import Papuga
 from Pets.Pingwin import Pingwin
 from Pets.Wieloryb import Wieloryb
 
-from JoyGameState import FallingBlock
 
+with open("lastGame.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+while len(lines) < 4:
+    lines.append("")
 
 fps = 60
 
@@ -25,7 +24,8 @@ BASE_WIDTH, BASE_HEIGHT = 1280, 720
 width, height = 1280, 720
 
 textField = ""
-textFieldText= "" #TUTAJ ZAPISUJE TEKST W NICKU, NIGDZIE INDZIEJ NIE BĘDZIEMY UŻYWAC TEGO WIĘC
+textFieldText = lines[0].strip().lower() if lines[0] != "" else ""
+
 
 window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 pygame.display.set_caption('Echo Pets')
@@ -43,9 +43,27 @@ button_list = []
 background = None
 background_width = 0
 
-pet = ""
+pet_Type = lines[1].strip().lower() if lines[1] != "" else ""
 
-pet_Type = ""
+
+
+match pet_Type:
+    case "kameleon":
+        pet = Kameleon(int(lines[3]), int(lines[2]))
+        print(pet)
+    case "wieloryb":
+        pet = Wieloryb(int(lines[3]), int(lines[2]))
+        print(pet)
+    case "pingwin":
+        pet = Pingwin(int(lines[3]), int(lines[2]))
+        print(pet)
+    case "papuga":
+        pet = Papuga(int(lines[3]), int(lines[2]))
+        print(pet)
+    case _:
+        pet = None
+
+
 
 frameCounter = 0
 
@@ -69,12 +87,20 @@ def closeGame(): # ========================================================== NI
 def changeGamestateToMenu(window_scale=1):
     global gameState
     global textFieldText
-    gameState = "menu"
     pygame.mixer.music.load('Assets/Sounds/Music/cyborg-ninja-kevin-macleod-main-version-7993-03-00 (1) (online-audio-converter.com).wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.25)
     setup_menu_buttons(window_scale)
-    textFieldText = ""
+
+    if gameState == "playing":
+
+     with open("lastGame.txt", "w", encoding="utf-8") as file:
+        file.write(textFieldText)
+        file.write(f"\n{pet_Type}")
+        file.write(f"\n{pet}")
+
+    gameState = "menu"
+
 
 
 
@@ -131,7 +157,20 @@ def runGame():
 
     button_list.clear()
 
+    pygame.mixer.music.load('Assets/Sounds/Music/itty-bitty-8-bit-kevin-macleod-main-version-7983-03-13.wav')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.25)
+
+
+
+
     frameCounter = 0
+
+    if pet is None:
+        print("Nie ma peta")
+        changeGamestateToMenu()
+        pygame.mixer.Sound("Assets/Sounds/SFX/interface-denied-access-betacut-1-00-01.wav").play()
+        return
 
     gameState = "playing"
 
@@ -147,7 +186,6 @@ def runGame():
     pet_y = int(height // 2 - pet_texture.get_height() // 2)
 
     window.blit(pet_texture, (pet_x, pet_y))
-
 
 
 
@@ -179,11 +217,6 @@ def runGame():
         scale=get_window_scale(width, height)
     )
 
-
-    # TO JEST TESTOWEEEEE!!!
-    # def makeGameFun():
-    #     global pet_Type, pet, scale
-    #     joy_game = JoyGame(pet, width, height, scale)
 
 
 
@@ -222,7 +255,7 @@ def setup_menu_buttons(window_scale):
         font_size=int(20 * width / BASE_WIDTH),
         rect=(width // 2 - width / 10, height //2 - height / 12, width / 5, height / 12),
         text_color=(255, 255, 255),
-        func=None,
+        func=runGame,
         scale = window_scale
     )
 
@@ -243,6 +276,8 @@ def poWyborze(text):
     global button_list
     global textFieldText
     global background
+
+    textFieldText = ""
 
 
 
@@ -287,25 +322,25 @@ def poWyborze(text):
 def wybierz_kameleona(zebyDzialal):
     global pet_Type, pet
     pet_Type = "kameleon"
-    pet = Kameleon()
+    pet = Kameleon(50,50)
     poWyborze("")
 
 def wybierz_pingwina(zebyDzialal):
     global pet_Type, pet
     pet_Type = "pingwin"
-    pet = Pingwin()
+    pet = Pingwin(50,50)
     poWyborze("")
 
 def wybierz_wieloryba(zebyDzialal):
     global pet_Type, pet
     pet_Type = "wieloryb"
-    pet = Wieloryb()
+    pet = Wieloryb(50,50)
     poWyborze("")
 
 def wybierz_papuge(zebyDzialal):
     global pet_Type, pet
     pet_Type = "papuga"
-    pet = Papuga()
+    pet = Papuga(50,50)
     poWyborze("")
 
 
@@ -365,12 +400,9 @@ def setup_new_game_buttons(window_scale):
 
 
 def afterNewGame(window_scale):
-    global gameState, background, background_width, width, height
+    global gameState, background, background_width, width, height, textFieldText
+    textFieldText = ""
     gameState = "nowa gra"
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load('Assets/Sounds/Music/itty-bitty-8-bit-kevin-macleod-main-version-7983-03-13.wav')
-    pygame.mixer.music.play(-1)
-    pygame.mixer.music.set_volume(0.25)
 
     background = pygame.image.load('Assets/Images/Backgrounds/tloWyboru.png').convert()
     background = pygame.transform.scale(background, (width, height))
@@ -378,10 +410,7 @@ def afterNewGame(window_scale):
 
     setup_new_game_buttons(window_scale)
 
-fb = FallingBlock(0, 0, scale=1) #TESTOWE
-
 def draw_main_menu(window, window_scale):
-    global fb #TESTOWE
     global scroll
 
     bakcground = pygame.image.load('Assets/Images/Backgrounds/juz seruo final.png').convert()
@@ -399,13 +428,6 @@ def draw_main_menu(window, window_scale):
 
     for button in button_list:
         button.draw(window)
-
-    fb.draw(window, window_scale)
-
-
-def joy_game_state():
-    global gameState
-    gameState = "joy game"
 
 
 
@@ -477,8 +499,8 @@ while True:
             pet.joy_points = newPoints
             frameCounter = 0
 
-        if isinstance(pet, Pet):
-            joy = pet.joy_points
+
+        joy = pet.joy_points
         bar_path = 'Assets/Images/PointsBar/SatietyBar/HungerIcon.png'
         bar = PointsBar("test", pet.satiety_points, bar_path, (0, 0, 249, 48), 1 * width / BASE_WIDTH)
         bar.draw(window)
@@ -498,8 +520,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if foodRect and foodRect.collidepoint(event.pos):
                 foodRect = None
+                pygame.mixer.Sound("Assets/Sounds/SFX/interface-denied-access-betacut-1-00-01.wav").play()
                 pet.feed(1)
-
 
         frameCounter += 1
 

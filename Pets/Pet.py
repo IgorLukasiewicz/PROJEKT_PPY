@@ -8,10 +8,6 @@ class Pet:
         self.textureAfterEvolve = ""
         self.backgroundTexture = ""
 
-
-    def textureBeforeEvolve(self):
-        return self.textureBeforeEvolve
-
     @property
     def name(self):
         return self._name
@@ -46,3 +42,6 @@ class Pet:
         self.satiety_points += additional_satiety_points
         if self.satiety_points > 100:
             self.satiety_points = 100
+
+    def __str__(self):
+        return f"{self.joy_points} \n{self.satiety_points}"
