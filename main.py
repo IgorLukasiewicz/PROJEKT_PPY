@@ -1,3 +1,5 @@
+import pygame.event
+
 from Przyciski.EndGameButton import EndGameButton
 from Przyciski.Button import Button
 from Przyciski.TextField import TextField
@@ -9,6 +11,7 @@ from Pets.Papuga import Papuga
 from Pets.Pingwin import Pingwin
 from Pets.Wieloryb import Wieloryb
 
+from JoyGame import JoyGame
 
 with open("lastGame.txt", "r", encoding="utf-8") as file:
     lines = file.readlines()
@@ -47,23 +50,22 @@ pet_Type = lines[1].strip().lower() if lines[1] != "" else ""
 
 
 
-match pet_Type:
-    case "kameleon":
-        pet = Kameleon(int(lines[3]), int(lines[2]))
-        print(pet)
-    case "wieloryb":
-        pet = Wieloryb(int(lines[3]), int(lines[2]))
-        print(pet)
-    case "pingwin":
-        pet = Pingwin(int(lines[3]), int(lines[2]))
-        print(pet)
-    case "papuga":
-        pet = Papuga(int(lines[3]), int(lines[2]))
-        print(pet)
-    case _:
-        pet = None
+if pet_Type == "kameleon":
+    pet = Kameleon(int(lines[3]), int(lines[2]))
+    print(pet)
+elif pet_Type == "wieloryb":
+    pet = Wieloryb(int(lines[3]), int(lines[2]))
+    print(pet)
+elif pet_Type == "pingwin":
+    pet = Pingwin(int(lines[3]), int(lines[2]))
+    print(pet)
+elif pet_Type == "papuga":
+    pet = Papuga(int(lines[3]), int(lines[2]))
+    print(pet)
+else:
+    pet = None
 
-
+joy_game = None
 
 frameCounter = 0
 
@@ -103,6 +105,24 @@ def changeGamestateToMenu(window_scale=1):
 
 
 
+def baw_sie():
+    global gameState
+    global frameCounter
+    global button_list
+    frameCounter = 0
+    gameState = "joy_game"
+    button_list.clear()
+
+    wrocDoGryButton = Button(
+        text="",
+        font_size=0,
+        rect=(width * 1 / 8.5 - (width / 5) / 2, height / 10 - 35, width / 23, height / 12),
+        text_color=(255, 255, 255),
+        func=runGame,
+        nieKlikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/WrocDoGrtButton/przedKlik.png',
+        klikniety='Assets/Images/ButtonFinalFinal(ale juz serio)/WrocDoGrtButton/poKlik.png'
+    )
+    button_list.append(wrocDoGryButton)
 
 def nakarm():
     global pet
@@ -213,7 +233,7 @@ def runGame():
         font_size=int(25 * width / BASE_WIDTH),
         rect=(width * 1 / 1.27 - (width / 5) / 2, height / 1.2 - (height / 12) / 2, width / 5, height / 12),
         text_color=(255, 255, 255),
-        func=wybierz_kameleona,
+        func=baw_sie,
         scale=get_window_scale(width, height)
     )
 
@@ -433,14 +453,11 @@ def draw_main_menu(window, window_scale):
 
 setup_menu_buttons(window_scale=1)
 
-
+scale = get_window_scale(width, height)
 while True:
     clock.tick(fps)
-
-
-
     for event in pygame.event.get():
-        scale = get_window_scale(width, height)
+
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -448,8 +465,6 @@ while True:
             width, height = event.w, event.h
             window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
             scale = get_window_scale(width, height)
-
-
             if gameState == "menu":
                 setup_menu_buttons(scale)
 
@@ -458,6 +473,8 @@ while True:
                 background = pygame.image.load('Assets/Images/Backgrounds/tloWyboru.png').convert()
                 background = pygame.transform.scale(background, (width, height))
                 setup_new_game_buttons(scale)
+            elif gameState == "joy_game":
+                joy_game.resize(window, scale)
 
             if gameState == "makePet":
                 poWyborze(textFieldText)
@@ -471,6 +488,11 @@ while True:
 
         if gameState == "makePet" and textField:
                 textField.handle_event(event)
+
+    # tu było   keys = pygame.key.get_pressed()
+
+    keys = pygame.key.get_pressed()
+
 
     if gameState == "menu":
         draw_main_menu(window, scale)
@@ -539,6 +561,28 @@ while True:
             foodRect = pygame.Rect(foodX, foodY, foodSquareSize, foodSquareSize)
             frameCounter = 0
 
+    elif gameState == "joy_game":
+        if not joy_game:
+            joy_game = JoyGame(pet_Type, width, height, scale)
+
+        frameCounter += 1
+        joy_game.change_pet(pet_Type)
+        if frameCounter == 120:
+            frameCounter = 0
+            pet.satiety_points -= 1
+        if keys[pygame.K_LEFT]:
+            joy_game.move_pet_left(window)
+        if keys[pygame.K_RIGHT]:
+            joy_game.move_pet_right(window)
+        joy_game.activate_falling_blocks(frameCounter)
+        joy_game.draw(window, scale)
+        for button in button_list:
+            button.draw(window)
+        if joy_game.collision():
+            pet.joy_points += 5
+            pygame.mixer.Sound("Assets/Sounds/SFX/interface-denied-access-betacut-1-00-01.wav").play()
+
+    print(frameCounter)
     shouldButtonMakeASound()
 
     pygame.display.update()

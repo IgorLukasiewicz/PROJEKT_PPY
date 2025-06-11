@@ -6,7 +6,7 @@ class Kameleon(Pet):
         satiety_points = satiety_points
         joy_points = joy_points
         super().__init__(satiety_points, joy_points)
-        self. textureBeforeEvolve= "Assets/Images/PetsTxt/BeforeEvolution/KameleonPrzedEwolucje.png"
+        self. textureBeforeEvolve= "Assets/Images/PetsTxt/BeforeEvolution/kameleon.png"
         self. textureAfterEvolve = ""
         self. backgroundTexture = "Assets/Images/Backgrounds/AnimalBackgrounds/Dzungla.png"
 
