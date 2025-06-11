@@ -11,6 +11,11 @@ from Pets.Papuga import Papuga
 from Pets.Pingwin import Pingwin
 from Pets.Wieloryb import Wieloryb
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path('..', 'source').resolve))
+
+
 from JoyGame import JoyGame
 
 with open("lastGame.txt", "r", encoding="utf-8") as file:
@@ -473,8 +478,8 @@ while True:
                 background = pygame.image.load('Assets/Images/Backgrounds/tloWyboru.png').convert()
                 background = pygame.transform.scale(background, (width, height))
                 setup_new_game_buttons(scale)
-            elif gameState == "joy_game":
-                joy_game.resize(window, scale)
+
+            joy_game.resize(window, scale)
 
             if gameState == "makePet":
                 poWyborze(textFieldText)
@@ -582,7 +587,6 @@ while True:
             pet.joy_points += 5
             pygame.mixer.Sound("Assets/Sounds/SFX/interface-denied-access-betacut-1-00-01.wav").play()
 
-    print(frameCounter)
     shouldButtonMakeASound()
 
     pygame.display.update()

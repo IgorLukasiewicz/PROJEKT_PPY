@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path('..', 'source').resolve))
+
 from Pets.Pet import Pet
 
 

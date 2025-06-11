@@ -1,5 +1,7 @@
 from Pets.Pet import Pet
-
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path('..', 'source').resolve))
 
 class Kameleon(Pet):
     def __init__(self, satiety_points, joy_points):

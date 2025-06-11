@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasa JoyGame &#8212; Echo Pets (Projekt na PPY) 11.06.2025 - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=be3ac27d"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=2827c288"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="next" title="Klasa PointsBar" href="PointsBar.html" />
+    <link rel="prev" title="Klasa Kameleon" href="Kameleon.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="klasa-joygame">
+<h1>Klasa JoyGame<a class="headerlink" href="#klasa-joygame" title="Link to this heading">¶</a></h1>
+<section id="opis">
+<h2>Opis<a class="headerlink" href="#opis" title="Link to this heading">¶</a></h2>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">JoyGame</span></code> reprezentuje mini-grę, w której gracz porusza swoim zwierzęciem (Pet), aby łapać spadające ikony radości i tym samym zwiększać jego punkty radości.
+Gra działa w oparciu o <cite>pygame</cite> i dynamicznie dopasowuje skalowanie oraz kolizje.</p>
+</section>
+<section id="atrybuty">
+<h2>Atrybuty<a class="headerlink" href="#atrybuty" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">background_surface</span></code>: Powierzchnia tła gry.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pet_name</span></code> (str): Nazwa zwierzaka (string odpowiadający nazwie pliku tekstury).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pet_position_x</span></code> (int): Pozycja x zwierzaka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pet_surface</span></code>: Obrazek zwierzaka po skalowaniu.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pet_rect</span></code>: Prostokąt kolizyjny zwierzaka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pet_speed</span></code> (int): Prędkość poruszania się zwierzaka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">falling_blocks</span></code> (list): Lista obiektów klasy <code class="docutils literal notranslate"><span class="pre">FallingBlock</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number_of_blocks</span></code> (int): Liczba bloków na szerokość ekranu.</p></li>
+</ul>
+</section>
+<section id="metody">
+<h2>Metody<a class="headerlink" href="#metody" title="Link to this heading">¶</a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#init__" title="Link to this definition">¶</a></dt>
+<dd><p>Inicjalizuje grę, wczytuje tekstury i ustawia pozycje elementów.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#resize" title="Link to this definition">¶</a></dt>
+<dd><p>Skaluje wszystkie elementy gry w zależności od rozmiaru okna.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="change_pet">
+<span class="sig-name descname"><span class="pre">change_pet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pet_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#change_pet" title="Link to this definition">¶</a></dt>
+<dd><p>Zmienia teksturę aktualnego zwierzaka.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw" title="Link to this definition">¶</a></dt>
+<dd><p>Rysuje tło, zwierzaka i aktywne bloki na podanej powierzchni.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="activate_falling_blocks">
+<span class="sig-name descname"><span class="pre">activate_falling_blocks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_counter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#activate_falling_blocks" title="Link to this definition">¶</a></dt>
+<dd><p>Co kilka klatek aktywuje losowy blok do spadania (jeśli jest nieaktywny).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="move_pet_left">
+<span class="sig-name descname"><span class="pre">move_pet_left</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#move_pet_left" title="Link to this definition">¶</a></dt>
+<dd><p>Przesuwa zwierzaka w lewo. Przejście poza ekran ustawia go po prawej stronie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="move_pet_right">
+<span class="sig-name descname"><span class="pre">move_pet_right</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#move_pet_right" title="Link to this definition">¶</a></dt>
+<dd><p>Przesuwa zwierzaka w prawo. Przejście poza ekran ustawia go po lewej stronie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="collision">
+<span class="sig-name descname"><span class="pre">collision</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#collision" title="Link to this definition">¶</a></dt>
+<dd><p>Sprawdza kolizję zwierzaka z blokiem. Jeśli kolizja nastąpiła, ustawia blok jako trafiony i zwraca <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="klasa-fallingblock">
+<h1>Klasa FallingBlock<a class="headerlink" href="#klasa-fallingblock" title="Link to this heading">¶</a></h1>
+<section id="id1">
+<h2>Opis<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">FallingBlock</span></code> reprezentuje pojedynczy obiekt (ikonę radości), który spada z góry ekranu.
+Może zostać aktywowany, rysowany i skalowany. Bloki mogą zostać złapane przez zwierzaka lub spaść poza ekran.</p>
+</section>
+<section id="id2">
+<h2>Atrybuty<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position_x,</span> <span class="pre">position_y</span></code> (int): Aktualna pozycja bloku.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block_surface</span></code>: Powierzchnia z teksturą bloku.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block_rect</span></code>: Prostokąt kolizyjny bloku.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">falling_speed</span></code> (int): Prędkość spadania.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hit</span></code> (bool): Czy blok został złapany przez zwierzaka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_for_fall</span></code> (bool): Czy blok został aktywowany i ma spadać.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Metody<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">starting_position_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_position_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Tworzy nowy blok w pozycji startowej.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_surface_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1280</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_surface_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">720</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>Skaluje blok i dostosowuje jego pozycję względem aktualnego rozmiaru ekranu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd><p>Rysuje blok na podanej powierzchni. Przesuwa go w dół o określoną prędkość.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Echo Pets (Projekt na PPY)</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="wprowadzenie.html">Wprowadzenie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glowny%20przebieg%20Gry.html">Echo Pets - Przebieg Gry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pet.html">Klasa Pet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Papuga.html">Klasa Papuga</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pingwin.html">Klasa Pingwin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wieloryb.html">Klasa Wieloryb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kameleon.html">Klasa Kameleon</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Klasa JoyGame</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#opis">Opis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atrybuty">Atrybuty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metody">Metody</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#klasa-fallingblock">Klasa FallingBlock</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Opis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Atrybuty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Metody</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PointsBar.html">Klasa PointsBar</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Kameleon.html" title="poprzedni rozdział">Klasa Kameleon</a></li>
+      <li>Next: <a href="PointsBar.html" title="następny rozdział">Klasa PointsBar</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Igor Lukasiewicz Ksawery Czuraj.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/JoyGame.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

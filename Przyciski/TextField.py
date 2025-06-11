@@ -33,7 +33,6 @@ class TextField:
             if event.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
             elif event.key == pygame.K_RETURN:
-                print(f"TextField submitted: {self.text}")
                 self.func()
             elif len(self.text) < 9:
                 self.text += event.unicode

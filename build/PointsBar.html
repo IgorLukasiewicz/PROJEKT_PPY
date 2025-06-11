@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasa PointsBar &#8212; Echo Pets (Projekt na PPY) 11.06.2025 - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=be3ac27d"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=2827c288"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="prev" title="Klasa JoyGame" href="JoyGame.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="klasa-pointsbar">
+<h1>Klasa PointsBar<a class="headerlink" href="#klasa-pointsbar" title="Link to this heading">¶</a></h1>
+<section id="opis">
+<h2>Opis<a class="headerlink" href="#opis" title="Link to this heading">¶</a></h2>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">PointsBar</span></code> odpowiada za graficzne przedstawienie paska punktów głodu i radości pupila w grze.
+Umożliwia renderowanie paska z ikoną, tłem i dynamiczną liczbą zielonych segmentów odpowiadających aktualnym punktom.</p>
+</section>
+<section id="atrybuty-klasowe">
+<h2>Atrybuty klasowe<a class="headerlink" href="#atrybuty-klasowe" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">green_bar_texture</span></code>: Wspólna tekstura zielonego paska dla wszystkich instancji.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">red_bar_texture</span></code>: Wspólna tekstura czerwonego tła paska dla wszystkich instancji.</p></li>
+</ul>
+</section>
+<section id="atrybuty-instancji">
+<h2>Atrybuty instancji<a class="headerlink" href="#atrybuty-instancji" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (str): Nazwa paska (np. „Hunger”, „Joy”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">points</span></code> (int): Liczba punktów (od 0 do 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rect</span></code> (tuple): Pozycja i rozmiar prostokąta, gdzie pasek ma być rysowany.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code> (int): Skala rysowania paska.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bar_icon</span></code>: Ikona wyświetlana obok paska (np. buźka, żarcie).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">red_bar_surface</span></code>: Powierzchnia czerwonego tła paska.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">green_bar_surface</span></code>: Lista powierzchni dla segmentów zielonych (start, środek, koniec).</p></li>
+</ul>
+</section>
+<section id="metody">
+<h2>Metody<a class="headerlink" href="#metody" title="Link to this heading">¶</a></h2>
+<dl class="py method">
+<dt class="sig sig-object py" id="init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bar_icon_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#init__" title="Link to this definition">¶</a></dt>
+<dd><p>Inicjalizuje obiekt <code class="docutils literal notranslate"><span class="pre">PointsBar</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Nazwa paska (str).</p></li>
+<li><p><strong>points</strong> – Początkowa liczba punktów (int).</p></li>
+<li><p><strong>bar_icon_path</strong> – Ścieżka do pliku z ikoną paska (str).</p></li>
+<li><p><strong>rect</strong> – Prostokąt do rysowania paska (x, y, width, height).</p></li>
+<li><p><strong>scale</strong> – Skala rysowania (domyślnie 1).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw" title="Link to this definition">¶</a></dt>
+<dd><p>Rysuje pasek na podanej powierzchni Pygame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>surface</strong> – Powierzchnia <cite>pygame.Surface</cite>, na której pasek ma być narysowany.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="dzialanie-metody-draw">
+<h2>Działanie metody <cite>draw</cite><a class="headerlink" href="#dzialanie-metody-draw" title="Link to this heading">¶</a></h2>
+<p>Metoda:</p>
+<ul class="simple">
+<li><p>Rysuje ikonę paska.</p></li>
+<li><p>Następnie rysuje czerwone tło paska.</p></li>
+<li><p>W zależności od wartości <cite>points</cite>, rysuje odpowiednią liczbę zielonych segmentów:
+- Segment początkowy, środkowe i końcowy (start, middle, end) są ładowane z tekstury-spritesheet.
+- Każdy segment odpowiada za ~5 punktów.</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Echo Pets (Projekt na PPY)</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="wprowadzenie.html">Wprowadzenie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glowny%20przebieg%20Gry.html">Echo Pets - Przebieg Gry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pet.html">Klasa Pet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Papuga.html">Klasa Papuga</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pingwin.html">Klasa Pingwin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wieloryb.html">Klasa Wieloryb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kameleon.html">Klasa Kameleon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyGame.html">Klasa JoyGame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyGame.html#klasa-fallingblock">Klasa FallingBlock</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Klasa PointsBar</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#opis">Opis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atrybuty-klasowe">Atrybuty klasowe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atrybuty-instancji">Atrybuty instancji</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metody">Metody</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dzialanie-metody-draw">Działanie metody <cite>draw</cite></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="JoyGame.html" title="poprzedni rozdział">Klasa JoyGame</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Igor Lukasiewicz Ksawery Czuraj.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/PointsBar.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

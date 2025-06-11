@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasa Pingwin &#8212; Echo Pets (Projekt na PPY) 11.06.2025 - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=be3ac27d"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=2827c288"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="next" title="Klasa Wieloryb" href="Wieloryb.html" />
+    <link rel="prev" title="Klasa Papuga" href="Papuga.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="klasa-pingwin">
+<h1>Klasa Pingwin<a class="headerlink" href="#klasa-pingwin" title="Link to this heading">¶</a></h1>
+<section id="opis">
+<h2>Opis<a class="headerlink" href="#opis" title="Link to this heading">¶</a></h2>
+<p>Klasa <code class="docutils literal notranslate"><span class="pre">Pingwin</span></code> dziedziczy po klasie <code class="docutils literal notranslate"><span class="pre">Pet</span></code> i reprezentuje konkretne zwierzę – pingwina.
+Ustawia domyślne tekstury oraz tło odpowiadające jego naturalnemu środowisku.</p>
+</section>
+<section id="atrybuty">
+<h2>Atrybuty<a class="headerlink" href="#atrybuty" title="Link to this heading">¶</a></h2>
+<p>Dziedziczone po klasie <code class="docutils literal notranslate"><span class="pre">Pet</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">satiety_points</span></code> (int): Punkty najedzenia (0–100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">joy_points</span></code> (int): Punkty radości (0–100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> (str): Imię zwierzaka.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">textureBeforeEvolve</span></code> (str): Ścieżka do tekstury przed ewolucją.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">textureAfterEvolve</span></code> (str): Ścieżka do tekstury po ewolucji.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backgroundTexture</span></code> (str): Ścieżka do tekstury tła.</p></li>
+</ul>
+<p>W konstruktorze klasy <code class="docutils literal notranslate"><span class="pre">Kameleon</span></code> wartości są inicjalizowane jak poniżej:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">textureBeforeEvolve</span></code>: <cite>„Assets/Images/PetsTxt/BeforeEvolution/pingwin.png”</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">textureAfterEvolve</span></code>: <cite>„”</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backgroundTexture</span></code>: <cite>„Assets/Images/Backgrounds/AnimalBackgrounds/Antarktyda.png”</cite></p></li>
+</ul>
+</section>
+<section id="metody">
+<h2>Metody<a class="headerlink" href="#metody" title="Link to this heading">¶</a></h2>
+<p>Dziedziczone z klasy <code class="docutils literal notranslate"><span class="pre">Pet</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">play(additional_joy_points,</span> <span class="pre">taken_satiety_points)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">feed(additional_satiety_points)</span></code></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Echo Pets (Projekt na PPY)</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="wprowadzenie.html">Wprowadzenie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glowny%20przebieg%20Gry.html">Echo Pets - Przebieg Gry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pet.html">Klasa Pet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Papuga.html">Klasa Papuga</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Klasa Pingwin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#opis">Opis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atrybuty">Atrybuty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metody">Metody</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Wieloryb.html">Klasa Wieloryb</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kameleon.html">Klasa Kameleon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyGame.html">Klasa JoyGame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyGame.html#klasa-fallingblock">Klasa FallingBlock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PointsBar.html">Klasa PointsBar</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Papuga.html" title="poprzedni rozdział">Klasa Papuga</a></li>
+      <li>Next: <a href="Wieloryb.html" title="następny rozdział">Klasa Wieloryb</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Igor Lukasiewicz Ksawery Czuraj.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/Pingwin.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
