@@ -479,7 +479,8 @@ while True:
                 background = pygame.transform.scale(background, (width, height))
                 setup_new_game_buttons(scale)
 
-            joy_game.resize(window, scale)
+            if joy_game:
+                joy_game.resize(window, scale)
 
             if gameState == "makePet":
                 poWyborze(textFieldText)
