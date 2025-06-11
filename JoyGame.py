@@ -108,14 +108,14 @@ class JoyGame:
         if  pet_position_x>=0:
             self.pet_rect = self.pet_rect.move(-self.pet_speed,0)
         else:
-            self.pet_rect.midbottom = (0, surface.get_height())
+            self.pet_rect.midbottom = (surface.get_width(), surface.get_height())
 
     def move_pet_right(self, surface: pygame.Surface):
         pet_position_x = self.pet_rect.x + self.pet_speed
         if pet_position_x <= surface.get_width():
             self.pet_rect = self.pet_rect.move(self.pet_speed, 0)
         else:
-            self.pet_rect.midbottom = (surface.get_width(), surface.get_height())
+            self.pet_rect.midbottom = (0, surface.get_height())
 
     def collision(self):
         for block in self.falling_blocks:
